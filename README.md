@@ -5,8 +5,8 @@
 ### 1. Clone & Prepare .env
 
 ```sh
-$ git clone git@github.com:nglcobdai/python-template.git
-$ cd python-template
+$ git clone git@github.com:nglcobdai/auto-unlock.git
+$ cd auto-unlock
 ```
 
 ### 2. Create .env
