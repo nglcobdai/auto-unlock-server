@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 services:
   project:
     build: .
@@ -7,3 +7,7 @@ services:
     env_file:
       - .env
     tty: true # retain container up
+    command: /bin/bash
+    shm_size: $DOCKER_SHM_SIZE
+    ports:
+      - "8000:8000"
