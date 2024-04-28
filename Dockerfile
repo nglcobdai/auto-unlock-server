@@ -28,7 +28,7 @@ RUN jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable printview/main
 
 # Poetryをインストール
-RUN pip install poetry
+RUN pip install --upgrade poetry
 
 # pyproject.toml、poetry.lock、poetry.tomlをコピーする
 COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/

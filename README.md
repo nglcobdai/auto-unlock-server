@@ -21,5 +21,17 @@ $ cp .env{.example,}
 
 ```sh
 docker-compose build --no-cache
-docker-compose run --rm project /bin/bash
+docker-compose up -d
+```
+
+### 4. Server Start
+
+```sh
+$ docker exec -it auto-unlock-project-1 uvicorn main:app --host 0.0.0.0
+```
+
+### 5. Access
+
+```sh
+$ curl -X POST http://127.0.0.1:8000/api/unlock
 ```
