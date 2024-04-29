@@ -56,11 +56,14 @@ class SwitchBot:
     def _post_request(self, url, params):
         res = requests.post(url, data=json.dumps(params), headers=self.headers)
         data = res.json()
-        if data["message"] == "success":
+        message = data.get("message", None)
+        if message == "success":
             logger.info(f"Successfully POST request to {url}, params: {params}")
-            return res.json()
-        logger.error(f"Failed POST request to {url}, params: {params}")
-        return {}
+        else:
+            logger.error(
+                f"Failed POST request to {url}, params: {params}, res: {message}"
+            )
+        return data
 
     def get_device_list(self):
         url = f"{self.SWITCH_BOT_API_URL}/{self.VERSION}/devices"
@@ -71,14 +74,13 @@ class SwitchBot:
             return {}
 
     def control_device(self, deviceId, command):
-        url = f"{self.SWITCH_BOT_API_URL}/v1.1/devices/{deviceId}/commands"
+        url = f"{self.SWITCH_BOT_API_URL}/{self.VERSION}/devices/{deviceId}/commands"
         params = {
             "command": command,
             "parameter": "",
             "commandType": "command",
         }
-        _ = self._post_request(url, params)
-        return {}
+        return self._post_request(url, params)
 
 
 if __name__ == "__main__":
