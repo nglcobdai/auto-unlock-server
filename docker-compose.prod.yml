@@ -1,6 +1,6 @@
 version: "3.3"
 services:
-  dev:
+  prod:
     build: .
     volumes:
       - .:/root/workspace
@@ -10,4 +10,4 @@ services:
     command: /bin/bash
     shm_size: $DOCKER_SHM_SIZE
     ports:
-      - "8001:8001"
+      - "8000:8000"
