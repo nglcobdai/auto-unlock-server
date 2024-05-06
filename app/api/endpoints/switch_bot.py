@@ -17,7 +17,7 @@ class SwitchBot:
     VERSION = "v1.1"
 
     def __init__(self):
-        dotenv.load_dotenv("/root/workspace/.env")  # .envファイルをロードする
+        dotenv.load_dotenv(".env")  # .envファイルをロードする
 
         switch_bot_token = os.getenv("SWITCH_BOT_TOKEN")
         switch_bot_secret = os.getenv("SWITCH_BOT_SECRET")
@@ -25,6 +25,7 @@ class SwitchBot:
 
         print(type(switch_bot_token), switch_bot_token)
         print(type(switch_bot_secret), switch_bot_secret)
+
         nonce = ""
         t = int(round(time.time() * 1000))
         string_to_sign = "{}{}{}".format(switch_bot_token, t, nonce)
