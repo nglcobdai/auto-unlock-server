@@ -29,7 +29,7 @@ jobs:
           echo "APP_NAME=${{ vars.APP_NAME }}" > .env
           echo "API_VERSION=${{ vars.API_VERSION }}" >> .env
           echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
-          echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
+          echo "SWITCH_BOT_SECRET=${{ vars.SWITCH_BOT_SECRET }}" >> .env
           echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
           echo "SWITCH_BOT_SECRET=${{ vars.SWITCH_BOT_SECRET }}"
           cat .env
