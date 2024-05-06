@@ -23,6 +23,8 @@ class SwitchBot:
         switch_bot_secret = os.getenv("SWITCH_BOT_SECRET")
         self.unlock_bot_id = os.getenv("UNLOCK_BOT_ID")
 
+        print(type(switch_bot_token), switch_bot_token)
+        print(type(switch_bot_secret), switch_bot_secret)
         nonce = ""
         t = int(round(time.time() * 1000))
         string_to_sign = "{}{}{}".format(switch_bot_token, t, nonce)
