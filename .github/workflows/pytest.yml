@@ -9,7 +9,7 @@ jobs:
   pytest:
     runs-on: ubuntu-latest
     environment:
-      name: developement
+      name: development
 
     steps:
       - uses: actions/checkout@v3
