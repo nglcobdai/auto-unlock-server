@@ -27,7 +27,7 @@ docker-compose -f docker-compose.prod.yml up -d
 ### 4. Server Start
 
 ```sh
-$ docker exec -it auto-unlock-server-prod-1 uvicorn main:app --host 0.0.0.0 --port 8000
+$ docker exec -it auto-unlock-server-prod-1 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 ### 5. Access
