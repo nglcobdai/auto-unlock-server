@@ -8,6 +8,8 @@ permissions:
 jobs:
   pytest:
     runs-on: ubuntu-latest
+    environment:
+      name: developement
 
     steps:
       - uses: actions/checkout@v3
@@ -21,6 +23,13 @@ jobs:
         run: pip install poetry
       - name: poetry install
         run: poetry install --no-root
-      - name: Test with pytest
+      - name: create .env file
         run: |
-          pytest
+          - touch .env
+          - echo "APP_NAME=${{ secrets.APP_NAME }}" > .env
+          - echo "APP_VERSION=${{ secrets.APP_VERSION }}" >> .env
+          - echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
+          - echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
+          - echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
+      - name: Test with pytest
+        run: pytest
