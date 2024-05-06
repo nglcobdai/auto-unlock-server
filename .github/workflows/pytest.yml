@@ -27,7 +27,7 @@ jobs:
         run: |
           touch .env
           echo "APP_NAME=${{ secrets.APP_NAME }}" > .env
-          echo "APP_VERSION=${{ secrets.APP_VERSION }}" >> .env
+          echo "API_VERSION=${{ secrets.API_VERSION }}" >> .env
           echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
           echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
           echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
