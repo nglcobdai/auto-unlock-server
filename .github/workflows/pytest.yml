@@ -25,11 +25,11 @@ jobs:
         run: poetry install --no-root
       - name: create .env file
         run: |
-          - touch .env
-          - echo "APP_NAME=${{ secrets.APP_NAME }}" > .env
-          - echo "APP_VERSION=${{ secrets.APP_VERSION }}" >> .env
-          - echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
-          - echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
-          - echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
+          touch .env
+          echo "APP_NAME=${{ secrets.APP_NAME }}" > .env
+          echo "APP_VERSION=${{ secrets.APP_VERSION }}" >> .env
+          echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
+          echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
+          echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
       - name: Test with pytest
         run: pytest
