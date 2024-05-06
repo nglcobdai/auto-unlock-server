@@ -31,5 +31,6 @@ jobs:
           echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env
           echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env
           echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
+          echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}"
       - name: Test with pytest
         run: pytest
