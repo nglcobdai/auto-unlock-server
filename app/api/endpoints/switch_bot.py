@@ -17,7 +17,7 @@ class SwitchBot:
     VERSION = "v1.1"
 
     def __init__(self):
-        dotenv.load_dotenv("/root/workspace/.env")  # .envファイルをロードする
+        dotenv.load_dotenv(".env")  # .envファイルをロードする
 
         self.switch_bot_token = os.getenv("SWITCH_BOT_TOKEN")
         self.switch_bot_secret = os.getenv("SWITCH_BOT_SECRET")
