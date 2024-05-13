@@ -5,7 +5,7 @@ __pycache__/
 .ipynb_checkpoints
 
 # Environments
-.env
+.env*
 
 # output
 .DS_Store

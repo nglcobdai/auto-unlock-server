@@ -14,14 +14,14 @@ $ cd auto-unlock-server
 - copy .env.example to .env
 
 ```sh
-$ cp .env{.example,}
+$ cp .env.example .env.prod
 ```
 
 ### 3. Docker Build & Run
 
 ```sh
-docker-compose -f docker-compose.prod.yml build --no-cache
-docker-compose -f docker-compose.prod.yml up -d
+docker-compose -f docker-compose.prod.yml build --env-file .env.prod --no-cache
+docker-compose -f docker-compose.prod.yml --env-file .env.prod up -d
 ```
 
 ### 4. Server Start
