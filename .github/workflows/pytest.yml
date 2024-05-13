@@ -42,7 +42,7 @@ jobs:
           docker-compose -f docker-compose.test.yml --env-file .env.test up -d
           docker ps
           ls -la
-          docker exec -it mongodb
+          docker exec -it mongodb /bin/bash
 
       - name: Test with pytest
         run: |
