@@ -31,10 +31,10 @@ services:
     ports:
       - ${MONGODB_PORT}:${MONGODB_PORT}
     volumes:
-      - ${DATADRIVE}/db:/data/db
+      - ${DATADRIVE}/db:/db
     networks:
       - default
-    # command: mongod --bind_ip_all --dbpath /data/db
+    command: mongod --bind_ip_all --dbpath /db
 
 networks:
   default:
