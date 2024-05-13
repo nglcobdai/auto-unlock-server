@@ -1,0 +1,50 @@
+version: "3.3"
+services:
+  test:
+    build: .
+    env_file:
+      - .env.test
+    volumes:
+      - .:/root/workspace
+    tty: true
+    command: /bin/bash
+    shm_size: 2gb
+    depends_on:
+      - mongodb
+    networks:
+      - default
+    environment:
+      - ENV=prod
+
+  mongodb:
+    image: mongo:5.0.4
+    env_file:
+      - .env.test
+    container_name: mongodb
+    hostname: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    networks:
+      - default
+    command: mongod --bind_ip_all --dbpath ./
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    env_file:
+      - .env.test
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
