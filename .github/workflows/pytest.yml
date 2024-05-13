@@ -25,7 +25,9 @@ jobs:
           echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env
 
       - name: Build the container
-        run: docker-compose -f docker-compose.test.yml --env-file .env.test up -d
+        run: |
+          docker-compose -f docker-compose.test.yml --env-file .env.test up -d
+          docker ps
 
       - name: Test with pytest
         run: |
