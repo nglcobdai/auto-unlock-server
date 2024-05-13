@@ -40,7 +40,6 @@ jobs:
         run: |
           docker-compose -f docker-compose.test.yml build --env-file .env.test --no-cache
           docker-compose -f docker-compose.test.yml --env-file .env.test up -d
-          docker ps
 
       - name: Test with pytest
         run: |
