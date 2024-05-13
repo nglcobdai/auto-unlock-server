@@ -6,6 +6,7 @@ services:
       - .env.test
     volumes:
       - .:/root/workspace
+      - ${DATADRIVE}/db:/data/db
     tty: true
     command: /bin/bash
     shm_size: 2gb
