@@ -33,7 +33,7 @@ services:
       - ${DATADRIVE}/db:/data/db
     networks:
       - default
-    command: mongod --bind_ip_all --dbpath /data/db
+    # command: mongod --bind_ip_all --dbpath /data/db
 
 networks:
   default:
