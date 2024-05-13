@@ -29,5 +29,5 @@ jobs:
 
       - name: Test with pytest
         run: |
-          docker-compose -f docker-compose.test.yml --env-file .env.test exec test pytest -v
+          docker-compose -f docker-compose.test.yml --env-file .env.test exec auto-unlock-server_test_1 pytest -v
           docker-compose -f docker-compose.test.yml --env-file .env.test down
