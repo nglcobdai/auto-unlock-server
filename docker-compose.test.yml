@@ -1,58 +1,39 @@
 version: "3.3"
 services:
-  dev:
+  test:
     build: .
     env_file:
-      - .env.dev
+      - .env.test
     volumes:
       - .:/root/workspace
-      - ${DATADRIVE}/db:/data/db
     tty: true
     command: /bin/bash
-    shm_size: ${DOCKER_SHM_SIZE}
-    ports:
-      - "8001:8001"
+    shm_size: 2gb
     depends_on:
       - ${MONGODB_HOST_NAME}
     networks:
       - default
     environment:
-      - ENV=dev
+      - ENV=test
 
   mongodb:
     image: mongo:5.0.4
     env_file:
-      - .env.dev
+      - .env.test
     container_name: ${MONGODB_HOST_NAME}
     hostname: ${MONGODB_HOST_NAME}
-    restart: always
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER_NAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_USER_PWD}
       TZ: Asia/Tokyo
     ports:
-      - ${MONGODB_PORT}:${MONGODB_PORT}
+      - "${MONGODB_PORT}:${MONGODB_PORT}"
     volumes:
       - ${DATADRIVE}/db:/data/db
     networks:
       - default
     command: mongod --bind_ip_all --dbpath /data/db
-
-  mongo-express:
-    image: mongo-express
-    restart: always
-    env_file:
-      - .env.dev
-    ports:
-      - "8081:8081"
-    environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGODB_ROOT_USER_NAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ROOT_USER_PWD}
-      ME_CONFIG_MONGODB_SERVER: ${MONGODB_HOST_NAME}
-    depends_on:
-      - ${MONGODB_HOST_NAME}
-    networks:
-      - default
 
 networks:
   default:

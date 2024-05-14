@@ -1,4 +1,5 @@
 from pydantic import BaseSettings
+import os
 
 
 class Settings(BaseSettings):
@@ -6,8 +7,18 @@ class Settings(BaseSettings):
     API_VERSION: str
     OPENAPI_URL: str = None
 
+    MONGODB_HOST_NAME: str
+    MONGODB_PORT: int
+    MONGODB_ROOT_USER_NAME: str
+    MONGODB_ROOT_USER_PWD: str
+    MONGODB_DATABASE: str
+    MONGODB_USER_NAME: str
+    MONGODB_USER_PWD: str
+    DATADRIVE: str
+
     class Config:
-        env_file = ".env"
+        env = os.getenv("ENV", "dev")
+        env_file = f".env.{env}"
         env_file_encoding = "utf-8"
 
     def __init__(self, **data):

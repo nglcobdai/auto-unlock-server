@@ -2,7 +2,7 @@ FROM python:3.10
 
 ENV LANG=C.UTF-8 \
     LANGUAGE=en_US \
-    PYTHONPATH="/root/workspace/src:$PYTHONPATH"
+    PYTHONPATH="/root/workspace/app:$PYTHONPATH"
 
 WORKDIR /root/workspace
 
