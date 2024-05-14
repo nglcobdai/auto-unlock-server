@@ -31,6 +31,7 @@ jobs:
           echo "MONGODB_USER_NAME=${{ vars.MONGODB_USER_NAME }}" >> .env.test
           echo "MONGODB_USER_PWD=${{ secrets.MONGODB_USER_PWD }}" >> .env.test
           echo "DATADRIVE=${{ vars.DATADRIVE }}" >> .env.test
+          cat .env.test
 
       - name: Make the db directory
         run: |
@@ -40,8 +41,12 @@ jobs:
         run: |
           docker-compose -f docker-compose.test.yml build --env-file .env.test --no-cache
           docker-compose -f docker-compose.test.yml --env-file .env.test up -d
+
+      - name: Debug
+        run: |
           docker ps
           docker exec auto-unlock-server_test_1 | ls -la
+          docker-compose -f docker-compose.test.yml logs mongodb
 
       - name: Test with pytest
         run: |
