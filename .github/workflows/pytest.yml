@@ -15,7 +15,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: create .env file
+
+      - name: Make the db directory
+        run: |
+          mkdir -p ${{ vars.DATADRIVE }}/db
+
+      - name: Create .env file
         run: |
           touch .env.test
           echo "APP_NAME=${{ vars.APP_NAME }}" > .env.test
@@ -33,13 +38,12 @@ jobs:
           echo "DATADRIVE=${{ vars.DATADRIVE }}" >> .env.test
           cat .env.test
 
-      - name: Make the db directory
-        run: |
-          mkdir -p ${{ vars.DATADRIVE }}/db
-
-      - name: Build the container
+      - name: Build the containers
         run: |
           docker-compose -f docker-compose.test.yml build --env-file .env.test --no-cache
+
+      - name: Start the containers
+        run: |
           docker-compose -f docker-compose.test.yml --env-file .env.test up -d
 
       - name: Debug
@@ -47,7 +51,15 @@ jobs:
           docker ps
           docker exec auto-unlock-server_test_1 ls -la
 
+      - name: Verify MongoDB
+        run: |
+          docker exec mongodb mongod --version
+
       - name: Test with pytest
         run: |
           docker exec auto-unlock-server_test_1 pytest -v
-          docker-compose down
+
+      - name: Clean up
+        if: always()
+        run: |
+          docker-compose -f docker-compose.test.yml down
