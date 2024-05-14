@@ -11,7 +11,8 @@ services:
     command: /bin/bash
     shm_size: 2gb
     depends_on:
-      - ${MONGODB_HOST_NAME}
+      # - ${MONGODB_HOST_NAME}
+      - mongodb
     networks:
       - default
     environment:
@@ -21,8 +22,10 @@ services:
     image: mongo:5.0.4
     env_file:
       - .env.test
-    container_name: ${MONGODB_HOST_NAME}
-    hostname: ${MONGODB_HOST_NAME}
+    # container_name: ${MONGODB_HOST_NAME}
+    container_name: mongodb
+    # hostname: ${MONGODB_HOST_NAME}
+    hostname: mongodb
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER_NAME}
@@ -49,7 +52,8 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGODB_ROOT_USER_PWD}
       ME_CONFIG_MONGODB_SERVER: ${MONGODB_HOST_NAME}
     depends_on:
-      - ${MONGODB_HOST_NAME}
+      # - ${MONGODB_HOST_NAME}
+      - mongodb
     networks:
       - default
 
