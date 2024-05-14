@@ -37,8 +37,8 @@ services:
     #   - ${DATADRIVE}/db:/db
     networks:
       - default
-    # command: mongod --bind_ip_all --dbpath db
-    command: /bin/bash
+    command: mongod --bind_ip_all --dbpath db
+    # command: /bin/bash
 
   mongo-express:
     image: mongo-express
