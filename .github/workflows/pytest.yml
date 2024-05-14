@@ -26,10 +26,10 @@ jobs:
           echo "MONGODB_HOST_NAME=${{ vars.MONGODB_HOST_NAME }}" >> .env.test
           echo "MONGODB_PORT=${{ vars.MONGODB_PORT }}" >> .env.test
           echo "MONGODB_ROOT_USER_NAME=${{ vars.MONGODB_ROOT_USER_NAME }}" >> .env.test
-          echo "MONGODB_ROOT_USER_PWD=${{ secrets.MONGODB_ROOT_USER_PWD }}" >> .env.test
+          echo "MONGODB_ROOT_USER_PWD=${{ vars.MONGODB_ROOT_USER_PWD }}" >> .env.test
           echo "MONGODB_DATABASE=${{ vars.MONGODB_DATABASE }}" >> .env.test
           echo "MONGODB_USER_NAME=${{ vars.MONGODB_USER_NAME }}" >> .env.test
-          echo "MONGODB_USER_PWD=${{ secrets.MONGODB_USER_PWD }}" >> .env.test
+          echo "MONGODB_USER_PWD=${{ vars.MONGODB_USER_PWD }}" >> .env.test
           echo "DATADRIVE=${{ vars.DATADRIVE }}" >> .env.test
           cat .env.test
 
@@ -45,7 +45,7 @@ jobs:
       - name: Debug
         run: |
           docker ps
-          docker exec auto-unlock-server_test_1 | ls -la
+          docker exec -it auto-unlock-server_test_1 | ls -la
           docker-compose -f docker-compose.test.yml logs mongodb
 
       - name: Test with pytest
