@@ -46,22 +46,6 @@ jobs:
         run: |
           docker-compose -f docker-compose.test.yml --env-file .env.test up -d
 
-      # - name: Wait for containers to be ready
-      #   run: |
-      #     docker ps
-      #     until docker exec mongodb mongod --version; do
-      #       sleep 5
-      #     done
-
-      # - name: Debug
-      #   run: |
-      #     docker ps
-      #     docker exec auto-unlock-server_test_1 ls -la
-
-      # - name: Verify MongoDB
-      #   run: |
-      #     docker exec mongodb mongod --version
-
       - name: Test with pytest
         run: |
           docker exec auto-unlock-server_test_1 pytest -v
@@ -69,4 +53,4 @@ jobs:
       - name: Clean up
         if: always()
         run: |
-          docker-compose -f docker-compose.test.yml down
+          docker-compose-f docker-compose.test.yml --env-file .env.test down

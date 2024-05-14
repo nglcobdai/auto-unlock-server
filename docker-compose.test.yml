@@ -28,9 +28,9 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_USER_PWD}
       TZ: Asia/Tokyo
     ports:
-      - "27017:27017"
+      - "${MONGODB_PORT}:${MONGODB_PORT}"
     volumes:
-      - ./db:/data/db
+      - ${DATADRIVE}/db:/data/db
     networks:
       - default
     command: mongod --bind_ip_all --dbpath /data/db
