@@ -6,7 +6,7 @@ services:
       - .env.test
     volumes:
       - .:/root/workspace
-      - ${DATADRIVE}/db:/data/db
+      # - ${DATADRIVE}/db:/data/db
     tty: true
     command: /bin/bash
     shm_size: 2gb
@@ -30,11 +30,11 @@ services:
       TZ: Asia/Tokyo
     ports:
       - ${MONGODB_PORT}:${MONGODB_PORT}
-    volumes:
-      - ${DATADRIVE}/db:/db
+    # volumes:
+    #   - ${DATADRIVE}/db:/db
     networks:
       - default
-    command: mongod --bind_ip_all --dbpath /db
+    command: mongod --bind_ip_all --dbpath db
 
   mongo-express:
     image: mongo-express
