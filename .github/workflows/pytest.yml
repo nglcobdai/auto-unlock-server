@@ -46,9 +46,9 @@ jobs:
         run: |
           docker ps
           docker exec auto-unlock-server_test_1 ls -la
-          docker-compose -f docker-compose.test.yml logs mongodb
+          docker-compose -f docker-compose.test.yml --env-file .env.test logs mongodb
 
       - name: Test with pytest
         run: |
-          docker exec auto-unlock-server_test_1 pytest -v
+          docker exec auto-unlock-server_test_1 --env-file .env.test pytest -v
           docker-compose down
