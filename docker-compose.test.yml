@@ -26,18 +26,18 @@ services:
     container_name: mongodb
     # hostname: ${MONGODB_HOST_NAME}
     hostname: mongodb
-    restart: always
+    restart: on-failure
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGODB_ROOT_USER_NAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_USER_PWD}
       TZ: Asia/Tokyo
     ports:
       - "27017:27017"
-    # volumes:
-    #   - ${DATADRIVE}/db:/db
+    volumes:
+      - ./db:/data/db
     networks:
       - default
-    command: mongod --bind_ip_all --dbpath db
+    command: mongod --bind_ip_all --dbpath /data/db
     # command: /bin/bash
 
   mongo-express:
