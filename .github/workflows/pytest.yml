@@ -45,10 +45,10 @@ jobs:
       - name: Debug
         run: |
           docker ps
-          docker exec -it auto-unlock-server_test_1 ls -la
+          docker exec auto-unlock-server_test_1 ls -la
           docker-compose -f docker-compose.test.yml logs mongodb
 
       - name: Test with pytest
         run: |
-          docker exec -it auto-unlock-server_test_1 pytest -v
+          docker exec auto-unlock-server_test_1 pytest -v
           docker-compose down
