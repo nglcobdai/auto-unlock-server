@@ -11,4 +11,4 @@ class TestSecretPhraseAuthenticator(TestCase):
     def test_call(self):
         with open(self.test_file_path, "rb") as f:
             content = f.read()
-        assert self.authenticator(content)
+        assert self.authenticator(content, "ひらけごま")

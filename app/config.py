@@ -19,6 +19,7 @@ class Settings(BaseSettings):
 
     WHISPER_MODEL: str
     SECRET_PHRASE: str
+    AUTHENTICATION_THRESHOLD: float
 
     class Config:
         env = os.getenv("ENV", "dev")

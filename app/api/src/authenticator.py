@@ -1,8 +1,9 @@
 from pathlib import Path
 
+from Levenshtein import ratio
 
-from app.config import settings
 from app.api.src.transcription import Transcription
+from app.config import settings
 
 
 class SecretPhraseAuthenticator:
@@ -21,11 +22,13 @@ class SecretPhraseAuthenticator:
     def __delete_temporary_file(self):
         self.temp_file_path.unlink()
 
-    def __is_authenticated(self, secret_phrase):
-        return secret_phrase == self.secret_phrase
+    def __is_authenticated(self, phrase, secret_phrase=None):
+        secret_phrase = secret_phrase or self.secret_phrase
+        self.ratio = ratio(phrase, secret_phrase)
+        return self.ratio > settings.AUTHENTICATION_THRESHOLD
 
-    def __call__(self, content):
+    def __call__(self, content, secret_phrase=None):
         self.__temporarily_save(content)
-        result = self.transcription(str(self.temp_file_path))
+        self.result = self.transcription(str(self.temp_file_path))
         self.__delete_temporary_file()
-        return self.__is_authenticated(result)
+        return self.__is_authenticated(self.result["text"], secret_phrase)
