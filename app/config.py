@@ -1,5 +1,6 @@
-from pydantic import BaseSettings
 import os
+
+from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -15,6 +16,9 @@ class Settings(BaseSettings):
     MONGODB_USER_NAME: str
     MONGODB_USER_PWD: str
     DATADRIVE: str
+
+    WHISPER_MODEL: str
+    SECRET_PHRASE: str
 
     class Config:
         env = os.getenv("ENV", "dev")

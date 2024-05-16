@@ -1,10 +1,13 @@
-from fastapi import APIRouter, UploadFile, File
+import base64
+
+from fastapi import APIRouter, File, UploadFile
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from app.api.endpoints.switch_bot import SwitchBot
+
+from app.api.src.mongodb import MongoDB
+from app.api.src.switch_bot import SwitchBot
+from app.api.src.authenticator import SecretPhraseAuthenticator
 from app.config import settings
-from app.api.endpoints.mongodb import MongoDB
-import base64
 
 ROOT_PATH = f"/api/{settings.API_VERSION}"
 
@@ -19,6 +22,7 @@ mongo_db = MongoDB(
     user_name=settings.MONGODB_USER_NAME,
     user_pwd=settings.MONGODB_USER_PWD,
 )
+authenticator = SecretPhraseAuthenticator()
 
 
 class Record(BaseModel):
@@ -43,4 +47,6 @@ async def unlock(file: UploadFile = File(...)):
             content={"message": "File upload failed", "error": str(e)}, status_code=400
         )
 
-    return switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
+    if authenticator(contents):
+        return switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
+    return {"message": "Authentication failed"}
