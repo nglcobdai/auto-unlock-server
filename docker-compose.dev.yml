@@ -4,6 +4,9 @@ services:
     build: .
     env_file:
       - .env.dev
+    environment:
+      - ENV=dev
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
       - .:/root/workspace
       - ${DATADRIVE}/db:/data/db
@@ -16,8 +19,11 @@ services:
       - ${MONGODB_HOST_NAME}
     networks:
       - default
-    environment:
-      - ENV=dev
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
 
   mongodb:
     image: mongo:5.0.4

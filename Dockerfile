@@ -1,8 +1,24 @@
-FROM python:3.10
+FROM ubuntu:22.04
 
 ENV LANG=C.UTF-8 \
     LANGUAGE=en_US \
     PYTHONPATH="/root/workspace/app:$PYTHONPATH"
+
+RUN apt-get update && apt-get install -y wget gnupg software-properties-common
+
+RUN apt install -y python3.10 python3-pip
+RUN ln -s /usr/bin/python3.10 /usr/bin/python
+
+# CUDAをインストール
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-ubuntu2204.pin
+RUN mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
+RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub
+RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /"
+RUN apt update
+RUN apt install -y cuda-12-4
+
+ENV LD_LIBRARY_PATH="/usr/local/cuda-12.4/lib64:$LD_LIBRARY_PATH" \
+    PATH="/usr/local/cuda-12.4/bin:$PATH"
 
 WORKDIR /root/workspace
 
@@ -11,28 +27,13 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-glx \
     && rm -rf /var/lib/apt/lists/*
 
-# pipをアップグレードし、必要なパッケージをインストール
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir notebook==6.4.6 jupyter_contrib_nbextensions jupyter_nbextensions_configurator
-
-# Jupyterのnbextensionsをインストールし、nbextensions_configuratorを有効化
-RUN jupyter contrib nbextension install --system && \
-    jupyter nbextensions_configurator enable --system
-
-# 特定のnbextensionsを有効にする
-RUN jupyter nbextension enable codefolding/main && \
-    jupyter nbextension enable contrib_nbextensions_help_item/main && \
-    jupyter nbextension enable code_font_size/code_font_size && \
-    jupyter nbextension enable collapsible_headings/main && \
-    jupyter nbextension enable move_selected_cells/main && \
-    jupyter nbextension enable printview/main
-
-# Poetryをインストール
-RUN pip install --upgrade poetry
-
 # pyproject.toml、poetry.lock、poetry.tomlをコピーする
 COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/
 
+# Poetry
+RUN pip install --no-cache-dir --upgrade pip \
+    pip install --upgrade poetry
 RUN poetry install --no-root
 
-RUN python -m ipykernel install --user --name python3.10 --display-name "Python 3.10.12"
+# OpenAI-Whisperに必要なライブラリをインストール
+RUN apt-get update && apt-get install -y ffmpeg
