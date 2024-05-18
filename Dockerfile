@@ -38,9 +38,13 @@ COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --upgrade poetry
 
-# Temporary directory for Poetry
+# Temporary directory for Poetry and torch installation
 ENV TMPDIR=/root/workspace/tmp
 RUN mkdir -p $TMPDIR
+
+# Clear cache to free up space
+RUN apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN poetry install --no-root
 
