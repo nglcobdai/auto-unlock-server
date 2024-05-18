@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from app.api.src.authenticator import SecretPhraseAuthenticator
 from app.api.src.mongodb import MongoDB
 from app.api.src.switch_bot import SwitchBot
-from app.config import settings
+from app.utils.config import settings
 
 ROOT_PATH = f"/api/{settings.API_VERSION}"
 

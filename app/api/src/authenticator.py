@@ -3,7 +3,7 @@ from pathlib import Path
 from Levenshtein import ratio
 
 from app.api.src.transcription import Transcription
-from app.config import settings
+from app.utils.config import settings
 
 
 class SecretPhraseAuthenticator:

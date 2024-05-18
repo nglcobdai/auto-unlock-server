@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 
-from app.config import settings
+from app.utils.config import settings
 from app.main import app
 
 
