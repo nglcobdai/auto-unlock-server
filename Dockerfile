@@ -19,8 +19,8 @@ RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86
     && mv cuda-ubuntu2204.pin /etc/apt/preferences.d/cuda-repository-pin-600
 RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/3bf863cc.pub
 RUN add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/ /" \
-    && apt update
-RUN apt install -y cuda-12-4 \
+    && apt-get update
+RUN apt-get install -y cuda-12-4 \
     && rm -rf /var/lib/apt/lists/*
 ENV LD_LIBRARY_PATH="/usr/local/cuda-12.4/lib64:$LD_LIBRARY_PATH" \
     PATH="/usr/local/cuda-12.4/bin:$PATH"
@@ -37,6 +37,11 @@ COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/
 # Poetryのインストールと依存関係のインストール
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --upgrade poetry
+
+# Temporary directory for Poetry
+ENV TMPDIR=/root/workspace/tmp
+RUN mkdir -p $TMPDIR
+
 RUN poetry install --no-root
 
 # OpenAI-Whisperに必要なライブラリをインストール
