@@ -1,14 +1,16 @@
 version: "3.3"
 services:
   test:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.test
     env_file:
       - .env.test
     volumes:
       - .:/root/workspace
     tty: true
     command: /bin/bash
-    shm_size: 2gb
+    shm_size: 4gb
     depends_on:
       - ${MONGODB_HOST_NAME}
     networks:

@@ -1,9 +1,9 @@
-from pymongo import MongoClient
-from dotenv import load_dotenv
 import os
 from logging import getLogger
 from time import time
 
+from dotenv import load_dotenv
+from pymongo import MongoClient
 
 load_dotenv()
 logger = getLogger(__name__)
