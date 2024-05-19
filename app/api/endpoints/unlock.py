@@ -1,11 +1,11 @@
-from fastapi.responses import JSONResponse
-from app.api.src.mongodb import MongoDB
-
-from app.utils.config import settings
 import base64
 
+from fastapi.responses import JSONResponse
+
 from app.api.src.authenticator import SecretPhraseAuthenticator
+from app.api.src.mongodb import MongoDB
 from app.api.src.switch_bot import SwitchBot
+from app.utils.config import settings
 
 authenticator = SecretPhraseAuthenticator()
 switch_bot = SwitchBot()

@@ -1,8 +1,7 @@
-from app.utils.file_manager import FileManager
-
 from whisper import load_model
 
 from app.utils.config import settings
+from app.utils.file_manager import FileManager
 
 
 class Transcription:

@@ -1,7 +1,7 @@
 from fastapi.testclient import TestClient
 
-from app.utils.config import settings
 from app.main import app
+from app.utils.config import settings
 
 
 class TestAutoUnlockAPI:
