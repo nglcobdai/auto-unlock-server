@@ -51,7 +51,7 @@ RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Poetryの依存関係インストール
-RUN poetry install --no-root --only main
+RUN poetry install --no-root
 
 # OpenAI-Whisperに必要なライブラリをインストール
 RUN apt-get update && apt-get install -y ffmpeg \
