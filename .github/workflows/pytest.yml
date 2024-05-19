@@ -36,6 +36,9 @@ jobs:
           echo "MONGODB_USER_NAME=${{ vars.MONGODB_USER_NAME }}" >> .env.test
           echo "MONGODB_USER_PWD=${{ vars.MONGODB_USER_PWD }}" >> .env.test
           echo "DATADRIVE=${{ vars.DATADRIVE }}" >> .env.test
+          echo "WHISPER_MODEL=${{ vars.WHISPER_MODEL }}" >> .env.test
+          echo "SECRET_PHRASE=${{ vars.SECRET_PHRASE }}" >> .env.test
+          echo "AUTHENTICATION_THRESHOLD=${{ vars.AUTHENTICATION_THRESHOLD }}" >> .env.test
           cat .env.test
 
       - name: Build the containers
