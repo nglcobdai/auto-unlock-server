@@ -38,15 +38,17 @@ COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --upgrade poetry
 
-# Temporary directory for Poetry and torch installation
+# Poetryの一時ディレクトリとキャッシュクリア
 ENV TMPDIR=/root/workspace/tmp
-RUN mkdir -p $TMPDIR
+RUN mkdir -p $TMPDIR \
+    && poetry cache clear --all --no-interaction
 
-# Clear cache to free up space
+# キャッシュクリアと空き容量の確保
 RUN apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN poetry install --no-root --no-dev
+# Poetryの依存関係インストール
+RUN poetry install --no-root --only main
 
 # OpenAI-Whisperに必要なライブラリをインストール
 RUN apt-get update && apt-get install -y ffmpeg \
