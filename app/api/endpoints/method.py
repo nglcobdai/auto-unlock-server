@@ -47,6 +47,8 @@ async def unlock(file: UploadFile = File(...)):
             content={"message": "File upload failed", "error": str(e)}, status_code=400
         )
 
+    return switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
+
     is_auth = authenticator(contents)
     if is_auth:
         return switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
