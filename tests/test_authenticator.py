@@ -1,25 +1,13 @@
-# tests/test_import_whisper.py
-# import whisper
-
-# from app.api.src.transcription import Transcription
+from app.api.src.authenticator import SecretPhraseAuthenticator
 
 
-from whisper import load_model
+class TestSecretPhraseAuthenticator:
+    @classmethod
+    def setup_class(cls):
+        cls.secret_phrase_authenticator = SecretPhraseAuthenticator()
 
-from app.utils.config import settings
+        with open("sample/test.wav", "rb") as file:
+            cls.content = file.read()
 
-
-class Transcription:
-    def __init__(self):
-        self.model = load_model(settings.WHISPER_MODEL)
-
-    def __call__(self, content):
-        return self.model.transcribe(content)
-
-
-def test_import_whisper():
-    tran = Transcription()
-    # model = whisper.load_model("small")
-    test_file_path = "sample/test.wav"
-
-    assert tran(test_file_path)["text"] == "ひらけごま"
+    def test_is_authenticated(self):
+        assert self.secret_phrase_authenticator(self.content) is True

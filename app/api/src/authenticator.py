@@ -28,7 +28,6 @@ class SecretPhraseAuthenticator:
         return self.ratio > settings.AUTHENTICATION_THRESHOLD
 
     def __call__(self, content, secret_phrase=None):
-        return True
         self.__temporarily_save(content)
         self.result = self.transcription(str(self.temp_file_path))
         self.__delete_temporary_file()
