@@ -2,7 +2,7 @@ version: "3.3"
 services:
   test:
     build:
-      dockerfile: ./Dockerfile.test
+      dockerfile: Dockerfile.test
     env_file:
       - .env.test
     volumes:
