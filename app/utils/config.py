@@ -8,6 +8,11 @@ class Settings(BaseSettings):
     API_VERSION: str
     OPENAPI_URL: str = None
 
+    SWITCH_BOT_TOKEN: str
+    SWITCH_BOT_SECRET: str
+    UNLOCK_BOT_ID: str
+    CALL_BOT_ID: str
+
     MONGODB_HOST_NAME: str
     MONGODB_PORT: int
     MONGODB_ROOT_USER_NAME: str
