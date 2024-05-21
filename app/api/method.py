@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, UploadFile, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, File, UploadFile
 
 from app.src.auto_unlock import AutoUnlock
 from app.utils.config import settings

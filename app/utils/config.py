@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     SWITCH_BOT_SECRET: str
     UNLOCK_BOT_ID: str
     CALL_BOT_ID: str
+    TIMEOUT: int
 
     MONGODB_HOST_NAME: str
     MONGODB_PORT: int

@@ -28,6 +28,8 @@ jobs:
           echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env.test
           echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env.test
           echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env.test
+          echo "CALL_BOT_ID=${{ secrets.CALL_BOT_ID }}" >> .env.test
+          echo "TIMEOUT=${{ vars.TIMEOUT }}" >> .env.test
           echo "MONGODB_HOST_NAME=${{ vars.MONGODB_HOST_NAME }}" >> .env.test
           echo "MONGODB_PORT=${{ vars.MONGODB_PORT }}" >> .env.test
           echo "MONGODB_ROOT_USER_NAME=${{ vars.MONGODB_ROOT_USER_NAME }}" >> .env.test

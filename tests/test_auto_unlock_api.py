@@ -1,3 +1,5 @@
+from time import sleep
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -17,7 +19,18 @@ class TestAutoUnlockAPI:
         assert response.status_code == 200
 
     def test_post_with_file(self):
+        _ = self.client.post(self.endpoint_url)
         files = {"file": ("test.wav", open("sample/test.wav", "rb"), "audio/wav")}
         response = self.client.post(self.endpoint_url, files=files)
 
         assert response.status_code == 200
+
+    def test_post_timeout(self):
+        _ = self.client.post(self.endpoint_url)
+
+        sleep(settings.TIMEOUT)
+
+        files = {"file": ("test.wav", open("sample/test.wav", "rb"), "audio/wav")}
+        response = self.client.post(self.endpoint_url, files=files)
+
+        assert response.json()["message"] == "Invalid request"

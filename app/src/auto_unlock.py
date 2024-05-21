@@ -1,6 +1,6 @@
 import base64
 from logging import getLogger
-
+from time import time
 from fastapi import BackgroundTasks
 
 from app.src.authenticator import SecretPhraseAuthenticator
@@ -25,20 +25,33 @@ class AutoUnlock:
             user_name=settings.MONGODB_USER_NAME,
             user_pwd=settings.MONGODB_USER_PWD,
         )
+        self.call_bot_time = None
 
     async def __call__(
         self, file=None, background_tasks: BackgroundTasks = BackgroundTasks()
     ):
+        self.check_timeout()
         if (file) and (self.is_phase_unlock):
+            logger.info("Unlocking the bot")
             return await self.control_unlock_bot(file, background_tasks)
         if (file is None) and (not self.is_phase_unlock):
+            logger.info("Calling the bot")
             return self.control_call_bot()
         return {"message": "Invalid request"}
+
+    def check_timeout(self):
+        if self.call_bot_time is None:
+            return
+        now = time()
+        if (now - self.call_bot_time) > settings.TIMEOUT:
+            self.is_phase_unlock = False
+            self.call_bot_time = None
 
     def control_call_bot(self):
         response = self.switch_bot.control_device(settings.CALL_BOT_ID, "turnOn")
         self.is_phase_unlock = response["message"] == "success"
         response["phrase_authorized"] = self.is_phase_unlock
+        self.call_bot_time = time()
         return response
 
     async def control_unlock_bot(self, file, background_tasks):
@@ -57,10 +70,10 @@ class AutoUnlock:
 
         if is_auth:
             return self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
-        logger.error(f"Authentication failed, result: {self.authenticator.context}")
-        return {
-            "message": f"Authentication failed, result: {self.authenticator.context}"
-        }
+
+        message = f"Authentication failed, result: {self.authenticator.context}"
+        logger.error(message)
+        return {"message": message}
 
     async def save_to_db(self, filename, base64_contents):
         try:
@@ -68,7 +81,7 @@ class AutoUnlock:
                 "records",
                 {
                     "file_name": filename,
-                    "context": self.authenticator.result["text"],
+                    "context": self.authenticator.context,
                     "contents": base64_contents,
                 },
             )
