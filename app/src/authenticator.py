@@ -2,7 +2,7 @@ from pathlib import Path
 
 from Levenshtein import ratio
 
-from app.api.src.transcription import Transcription
+from app.src.transcription import Transcription
 from app.utils.config import settings
 from app.utils.file_manager import FileManager
 
@@ -25,5 +25,6 @@ class SecretPhraseAuthenticator:
     def __call__(self, content, secret_phrase=None):
         self.file_manager.temporarily_save(content)
         self.result = self.transcription(str(self.file_manager.temp_file_path))
+        self.context = self.result["text"]
         self.file_manager.delete_temporary_file()
         return self.__is_authenticated(self.result["text"], secret_phrase)
