@@ -3,9 +3,9 @@ from logging import getLogger
 
 from fastapi import BackgroundTasks
 
-from app.api.src.authenticator import SecretPhraseAuthenticator
-from app.api.src.mongodb import MongoDB
-from app.api.src.switch_bot import SwitchBot
+from app.src.authenticator import SecretPhraseAuthenticator
+from app.src.mongodb import MongoDB
+from app.src.switch_bot import SwitchBot
 from app.utils.config import settings
 
 logger = getLogger(__name__)

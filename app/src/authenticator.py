@@ -2,7 +2,7 @@ from pathlib import Path
 
 from Levenshtein import ratio
 
-from app.api.src.transcription import Transcription
+from app.src.transcription import Transcription
 from app.utils.config import settings
 from app.utils.file_manager import FileManager
 

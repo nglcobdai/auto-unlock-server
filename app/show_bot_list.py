@@ -1,4 +1,4 @@
-from app.api.src.switch_bot import SwitchBot
+from app.src.switch_bot import SwitchBot
 
 
 def main():
