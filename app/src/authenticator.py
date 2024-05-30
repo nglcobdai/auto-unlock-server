@@ -19,8 +19,8 @@ class SecretPhraseAuthenticator:
 
     def __is_authenticated(self, phrase, secret_phrase=None):
         secret_phrase = secret_phrase or self.secret_phrase
-        self.ratio = ratio(phrase, secret_phrase)
-        return self.ratio > settings.AUTHENTICATION_THRESHOLD
+        self.score = ratio(phrase, secret_phrase)
+        return self.score > settings.AUTHENTICATION_THRESHOLD
 
     def __call__(self, content, secret_phrase=None):
         self.file_manager.temporarily_save(content)

@@ -1,6 +1,7 @@
 import base64
 from logging import getLogger
 from time import time
+
 from fastapi import BackgroundTasks
 
 from app.src.authenticator import SecretPhraseAuthenticator
@@ -34,10 +35,19 @@ class AutoUnlock:
         if (file) and (self.is_phase_unlock):
             logger.info("Unlocking the bot")
             return await self.control_unlock_bot(file, background_tasks)
-        if (file is None) and (not self.is_phase_unlock):
-            logger.info("Calling the bot")
-            return self.control_call_bot()
-        return {"message": "Invalid request"}
+        elif (file is None) and (self.is_phase_unlock):
+            return {
+                "message": "File is required",
+                "phrase_authorized": self.is_phase_unlock,
+            }
+        elif (file) and (not self.is_phase_unlock):
+            return {
+                "message": "File is not required",
+                "phrase_authorized": self.is_phase_unlock,
+            }
+
+        logger.info("Calling the bot")
+        return self.control_call_bot()
 
     def check_timeout(self):
         if self.call_bot_time is None:
@@ -69,9 +79,13 @@ class AutoUnlock:
         background_tasks.add_task(self.save_to_db, file.filename, base64_contents)
 
         if is_auth:
+            print(
+                f"Authentication succeeded, result: {self.authenticator.context}, score: {self.authenticator.score}"
+            )
             return self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
 
-        message = f"Authentication failed, result: {self.authenticator.context}"
+        message = f"Authentication failed, result: {self.authenticator.context},\
+            not {settings.SECRET_PHRASE}, score: {self.authenticator.score}"
         logger.error(message)
         return {"message": message}
 

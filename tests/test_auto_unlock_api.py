@@ -33,4 +33,4 @@ class TestAutoUnlockAPI:
         files = {"file": ("test.wav", open("sample/test.wav", "rb"), "audio/wav")}
         response = self.client.post(self.endpoint_url, files=files)
 
-        assert response.json()["message"] == "Invalid request"
+        assert response.json()["phrase_authorized"] is False
