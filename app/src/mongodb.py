@@ -109,7 +109,7 @@ class MongoDB:
 
 if __name__ == "__main__":
     try:
-        MongoDB(
+        mongodb = MongoDB(
             host=HOST_NAME,
             port=PORT_NUM,
             root_user=ROOT_USER_NAME,
@@ -119,5 +119,6 @@ if __name__ == "__main__":
             user_pwd=USER_PWD,
         )
         logger.info("Successfully connected to MongoDB")
+        print(mongodb.count_all(DB_NAME))
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {str(e)}")
