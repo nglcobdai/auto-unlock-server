@@ -19,7 +19,6 @@ $ cp .env.example .env.prod
 
 #### edit .env.prod
 
-下記項目を編集する必要がある(en)
 You need to edit the following items
 
 | Key                 | Description              | Reference                                                                                     |
@@ -42,7 +41,7 @@ $ docker-compose -f docker-compose.prod.yml --env-file .env.prod up --build -d
 ### 4. Server Start
 
 ```sh
-$ docker exec -it auto-unlock-server-prod-1 uvicorn app.main:app --host 0.0.0.0 --port 8000
+$ docker exec -it auto-unlock-server-prod-1 uvicorn server.main:server --host 0.0.0.0 --port 8000
 ```
 
 ### 5. Access

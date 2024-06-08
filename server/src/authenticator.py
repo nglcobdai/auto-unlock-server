@@ -2,9 +2,9 @@ from pathlib import Path
 
 from Levenshtein import ratio
 
-from app.src.transcription import Transcription
-from app.utils.config import settings
-from app.utils.file_manager import FileManager
+from server.src.transcription import Transcription
+from server.utils.config import settings
+from server.utils.file_manager import FileManager
 
 
 class SecretPhraseAuthenticator:

@@ -7,7 +7,7 @@ from logging import getLogger
 
 import requests
 
-from app.utils.config import settings
+from server.utils.config import settings
 
 logger = getLogger(__name__)
 

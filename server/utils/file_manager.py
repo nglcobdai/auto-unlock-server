@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from app.utils.config import settings
+from server.utils.config import settings
 
 
 class FileManager:

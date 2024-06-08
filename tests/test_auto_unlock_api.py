@@ -2,8 +2,8 @@ from time import sleep
 
 from fastapi.testclient import TestClient
 
-from app.main import app
-from app.utils.config import settings
+from server.main import app
+from server.utils.config import settings
 
 
 class TestAutoUnlockAPI:

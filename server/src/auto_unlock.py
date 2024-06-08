@@ -4,10 +4,10 @@ from time import time
 
 from fastapi import BackgroundTasks
 
-from app.src.authenticator import SecretPhraseAuthenticator
-from app.src.mongodb import MongoDB
-from app.src.switch_bot import SwitchBot
-from app.utils.config import settings
+from server.src.authenticator import SecretPhraseAuthenticator
+from server.src.mongodb import MongoDB
+from server.src.switch_bot import SwitchBot
+from server.utils.config import settings
 
 logger = getLogger(__name__)
 
