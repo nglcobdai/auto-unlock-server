@@ -1,13 +1,13 @@
-import requests
-import json
-import dotenv
-import os
-import time
+import base64
 import hashlib
 import hmac
-import base64
+import json
+import time
 from logging import getLogger
 
+import requests
+
+from app.utils.config import settings
 
 logger = getLogger(__name__)
 
@@ -17,11 +17,8 @@ class SwitchBot:
     VERSION = "v1.1"
 
     def __init__(self):
-        dotenv.load_dotenv(".env")  # .envファイルをロードする
-
-        self.switch_bot_token = os.getenv("SWITCH_BOT_TOKEN")
-        self.switch_bot_secret = os.getenv("SWITCH_BOT_SECRET")
-        self.unlock_bot_id = os.getenv("UNLOCK_BOT_ID")
+        self.switch_bot_token = settings.SWITCH_BOT_TOKEN
+        self.switch_bot_secret = settings.SWITCH_BOT_SECRET
 
     def __init_headers(self):
         nonce = ""
@@ -82,8 +79,3 @@ class SwitchBot:
             "commandType": "command",
         }
         return self._post_request(url, params, headers)
-
-
-if __name__ == "__main__":
-    switch_bot = SwitchBot()
-    switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
