@@ -79,10 +79,17 @@ class AutoUnlock:
         background_tasks.add_task(self.save_to_db, file.filename, base64_contents)
 
         if is_auth:
-            print(
-                f"Authentication succeeded, result: {self.authenticator.context}, score: {self.authenticator.score}"
+            logger.info(
+                f"Authentication succeeded,\
+                result: {self.authenticator.context},\
+                score: {self.authenticator.score}"
             )
-            return self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
+            response = self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
+            response["phrase_authorized"] = True
+            response["result"] = self.authenticator.context
+            response["score"] = self.authenticator.score
+
+            return response
 
         message = f"Authentication failed, result: {self.authenticator.context},\
             not {settings.SECRET_PHRASE}, score: {self.authenticator.score}"
