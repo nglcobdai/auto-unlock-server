@@ -47,5 +47,5 @@ $ docker exec -it auto-unlock-server-prod-1 uvicorn server.main:server --host 0.
 ### 5. Access
 
 ```sh
-$ curl --noproxy 127.0.0.1 -X POST http://127.0.0.1:8000/api/v1.0/unlock
+$ curl --noproxy 127.0.0.1 -X POST http://127.0.0.1:8000/v1.1/unlock
 ```

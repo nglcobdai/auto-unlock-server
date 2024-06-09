@@ -2,7 +2,7 @@ from time import sleep
 
 from fastapi.testclient import TestClient
 
-from server.main import app
+from server.main import server
 from server.utils.config import settings
 
 
@@ -10,8 +10,8 @@ class TestAutoUnlockAPI:
 
     @classmethod
     def setup_class(cls):
-        cls.client = TestClient(app)
-        cls.endpoint_url = f"/api/{settings.API_VERSION}/unlock"
+        cls.client = TestClient(server)
+        cls.endpoint_url = f"/{settings.API_VERSION}/unlock"
 
     def test_post_without_file(self):
         response = self.client.post(self.endpoint_url)
