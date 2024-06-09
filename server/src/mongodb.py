@@ -1,20 +1,13 @@
-import os
 from logging import getLogger
 from time import time
 
 from dotenv import load_dotenv
 from pymongo import MongoClient
 
+from server.utils.config import settings
+
 load_dotenv()
 logger = getLogger(__name__)
-
-HOST_NAME = os.getenv("MONGODB_HOST_NAME")
-PORT_NUM = int(os.getenv("MONGODB_PORT"))
-ROOT_USER_NAME = os.getenv("MONGODB_ROOT_USER_NAME")
-ROOT_USER_PWD = os.getenv("MONGODB_ROOT_USER_PWD")
-DB_NAME = os.getenv("MONGODB_DATABASE")
-USER_NAME = os.getenv("MONGODB_USER_NAME")
-USER_PWD = os.getenv("MONGODB_USER_PWD")
 
 
 class MongoDB:
@@ -110,15 +103,15 @@ class MongoDB:
 if __name__ == "__main__":
     try:
         mongodb = MongoDB(
-            host=HOST_NAME,
-            port=PORT_NUM,
-            root_user=ROOT_USER_NAME,
-            root_pwd=ROOT_USER_PWD,
-            db_name=DB_NAME,
-            user_name=USER_NAME,
-            user_pwd=USER_PWD,
+            host=settings.MONGODB_HOST_NAME,
+            port=settings.MONGODB_PORT,
+            root_user=settings.MONGODB_ROOT_USER_NAME,
+            root_pwd=settings.MONGODB_ROOT_USER_PWD,
+            db_name=settings.MONGODB_DATABASE,
+            user_name=settings.MONGODB_USER_NAME,
+            user_pwd=settings.MONGODB_USER_PWD,
         )
         logger.info("Successfully connected to MongoDB")
-        print(mongodb.count_all(DB_NAME))
+        print(mongodb.count_all(settings.MONGODB_DATABASE))
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {str(e)}")

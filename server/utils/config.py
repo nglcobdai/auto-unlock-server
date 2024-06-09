@@ -34,7 +34,7 @@ class Settings(BaseSettings):
 
     def __init__(self, **data):
         super().__init__(**data)
-        self.OPENAPI_URL = f"/api/{self.API_VERSION}/openapi.json"
+        self.OPENAPI_URL = f"/{self.API_VERSION}/openapi.json"
 
 
 settings = Settings()

@@ -1,9 +1,9 @@
 from fastapi import APIRouter, BackgroundTasks, File, UploadFile
 
-from app.src.auto_unlock import AutoUnlock
-from app.utils.config import settings
+from server.src.auto_unlock import AutoUnlock
+from server.utils.config import settings
 
-ROOT_PATH = f"/api/{settings.API_VERSION}"
+ROOT_PATH = f"/{settings.API_VERSION}"
 
 router = APIRouter()
 auto_unlock = AutoUnlock()

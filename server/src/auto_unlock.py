@@ -4,10 +4,10 @@ from time import time
 
 from fastapi import BackgroundTasks
 
-from app.src.authenticator import SecretPhraseAuthenticator
-from app.src.mongodb import MongoDB
-from app.src.switch_bot import SwitchBot
-from app.utils.config import settings
+from server.src.authenticator import SecretPhraseAuthenticator
+from server.src.mongodb import MongoDB
+from server.src.switch_bot import SwitchBot
+from server.utils.config import settings
 
 logger = getLogger(__name__)
 
@@ -79,10 +79,17 @@ class AutoUnlock:
         background_tasks.add_task(self.save_to_db, file.filename, base64_contents)
 
         if is_auth:
-            print(
-                f"Authentication succeeded, result: {self.authenticator.context}, score: {self.authenticator.score}"
+            logger.info(
+                f"Authentication succeeded,\
+                result: {self.authenticator.context},\
+                score: {self.authenticator.score}"
             )
-            return self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
+            response = self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
+            response["phrase_authorized"] = True
+            response["result"] = self.authenticator.context
+            response["score"] = self.authenticator.score
+
+            return response
 
         message = f"Authentication failed, result: {self.authenticator.context},\
             not {settings.SECRET_PHRASE}, score: {self.authenticator.score}"
