@@ -6,6 +6,9 @@ services:
       dockerfile: ./Dockerfile.prod
     env_file:
       - .env.prod
+    environment:
+      - ENV=prod
+      - NVIDIA_VISIBLE_DEVICES=all
     volumes:
       - .:/root/workspace
       - ${DATADRIVE}/db:/data/db
@@ -18,8 +21,11 @@ services:
       - ${MONGODB_HOST_NAME}
     networks:
       - default
-    environment:
-      - ENV=prod
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
 
   mongodb:
     image: mongo:5.0.4
