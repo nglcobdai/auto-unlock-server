@@ -13,8 +13,8 @@ It triggers when the room's intercom sounds, performs pass-phrase authentication
 
 - Docker and docker-compose are required. The versions are as follows.
 
-  - docker: 26.0.2
-  - docker-compose: 2.22.0
+  - docker: v26.0.2
+  - docker-compose: v2.22.0
 
 - CUDA is required.
 
@@ -25,7 +25,7 @@ It triggers when the room's intercom sounds, performs pass-phrase authentication
 ### 1. Clone & Prepare .env
 
 ```sh
-$ git clone git@github.com:nglcobdai/auto-unlock-server.git
+$ git clone -b v1.1.0 https://github.com/nglcobdai/auto-unlock-server.git
 $ cd auto-unlock-server
 ```
 
@@ -66,6 +66,20 @@ $ docker exec -it auto-unlock-server-prod-1 uvicorn server.main:server --host 0.
 
 ### 5. Access
 
+Open other terminal and move to the project directory.
+
+```sh
+$ cd auto-unlock-server
+```
+
+#### Trigger Call Bot
+
 ```sh
 $ curl --noproxy 127.0.0.1 -X POST http://127.0.0.1:8000/v1.1/unlock
+```
+
+#### Trigger Unlock Bot
+
+```sh
+$ curl --noproxy 127.0.0.1 -X POST -F "file=@./sample/test.wav" http://127.0.0.1:8000/v1.1/unlock
 ```
