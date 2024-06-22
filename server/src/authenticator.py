@@ -3,15 +3,14 @@ from pathlib import Path
 from Levenshtein import ratio
 
 from server.src.transcription import Transcription
-from server.utils.config import settings
-from server.utils.file_manager import FileManager
+from server.utils import file_manager, settings
 
 
 class SecretPhraseAuthenticator:
     def __init__(self):
         self.secret_phrase = settings.SECRET_PHRASE
         self.transcription = Transcription()
-        self.file_manager = FileManager()
+        self.file_manager = file_manager
 
         temporary_file_dir = Path(settings.DATADRIVE) / "temp"
         temporary_file_dir.mkdir(parents=True, exist_ok=True)

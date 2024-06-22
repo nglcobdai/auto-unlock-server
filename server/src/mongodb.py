@@ -1,13 +1,8 @@
-from logging import getLogger
 from time import time
 
-from dotenv import load_dotenv
 from pymongo import MongoClient
 
-from server.utils.config import settings
-
-load_dotenv()
-logger = getLogger(__name__)
+from server.utils import logger, settings
 
 
 class MongoDB:
@@ -39,6 +34,7 @@ class MongoDB:
             self.__create_collection(db_name)
         else:
             logger.warning(f"Collection '{db_name}' already exists")
+        logger.info("Successfully connected to MongoDB")
 
     def __create_user(self, user_name, user_pwd, role="readWrite"):
         """Create user
@@ -111,7 +107,6 @@ if __name__ == "__main__":
             user_name=settings.MONGODB_USER_NAME,
             user_pwd=settings.MONGODB_USER_PWD,
         )
-        logger.info("Successfully connected to MongoDB")
         print(mongodb.count_all(settings.MONGODB_DATABASE))
     except Exception as e:
         logger.error(f"Failed to connect to MongoDB: {str(e)}")

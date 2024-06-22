@@ -1,7 +1,6 @@
 from whisper import load_model
 
-from server.utils.config import settings
-from server.utils.file_manager import FileManager
+from server.utils import file_manager, settings
 
 
 class Transcription:
@@ -16,13 +15,12 @@ class TestTranscription:
     @classmethod
     def setup_class(cls):
         cls.transcription = Transcription()
-        cls.file_manager = FileManager()
 
     def test_transcribe(self):
         with open("sample/test.wav", "rb") as file:
             content = file.read()
-        self.file_manager.temporarily_save(content)
-        result = self.transcription(str(self.file_manager.temp_file_path))
-        self.file_manager.delete_temporary_file()
+        file_manager.temporarily_save(content)
+        result = self.transcription(str(file_manager.temp_file_path))
+        file_manager.delete_temporary_file()
 
         assert result["text"] == "ひらけごま"
