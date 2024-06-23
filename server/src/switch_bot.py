@@ -1,15 +1,12 @@
-import requests
-import json
-import dotenv
-import os
-import time
+import base64
 import hashlib
 import hmac
-import base64
-from logging import getLogger
+import json
+import time
 
+import requests
 
-logger = getLogger(__name__)
+from server.utils import logger, settings
 
 
 class SwitchBot:
@@ -17,11 +14,8 @@ class SwitchBot:
     VERSION = "v1.1"
 
     def __init__(self):
-        dotenv.load_dotenv("/root/workspace/.env")  # .envファイルをロードする
-
-        self.switch_bot_token = os.getenv("SWITCH_BOT_TOKEN")
-        self.switch_bot_secret = os.getenv("SWITCH_BOT_SECRET")
-        self.unlock_bot_id = os.getenv("UNLOCK_BOT_ID")
+        self.switch_bot_token = settings.SWITCH_BOT_TOKEN
+        self.switch_bot_secret = settings.SWITCH_BOT_SECRET
 
     def __init_headers(self):
         nonce = ""
@@ -57,7 +51,8 @@ class SwitchBot:
         data = res.json()
         message = data.get("message", None)
         if message == "success":
-            logger.info(f"Successfully POST request to {url}, params: {params}")
+            logger.info(f"Successfully POST request to {url}")
+            logger.debug(f"params: {params}, res: {data}")
         else:
             logger.error(
                 f"Failed POST request to {url}, params: {params}, res: {message}"
@@ -84,6 +79,10 @@ class SwitchBot:
         return self._post_request(url, params, headers)
 
 
-if __name__ == "__main__":
+def main():
     switch_bot = SwitchBot()
-    switch_bot.control_device(switch_bot.unlock_bot_id, "turnOn")
+    print(switch_bot.get_device_list())
+
+
+if __name__ == "__main__":
+    main()

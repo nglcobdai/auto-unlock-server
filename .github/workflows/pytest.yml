@@ -1,0 +1,57 @@
+name: pytest
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+permissions:
+  contents: read
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    environment:
+      name: development
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make the db directory
+        run: |
+          mkdir -p ${{ vars.DATADRIVE }}/db
+
+      - name: Create .env file
+        run: |
+          touch .env.test
+          echo "APP_NAME=${{ vars.APP_NAME }}" > .env.test
+          echo "API_VERSION=${{ vars.API_VERSION }}" >> .env.test
+          echo "SWITCH_BOT_TOKEN=${{ secrets.SWITCH_BOT_TOKEN }}" >> .env.test
+          echo "SWITCH_BOT_SECRET=${{ secrets.SWITCH_BOT_SECRET }}" >> .env.test
+          echo "UNLOCK_BOT_ID=${{ secrets.UNLOCK_BOT_ID }}" >> .env.test
+          echo "CALL_BOT_ID=${{ secrets.CALL_BOT_ID }}" >> .env.test
+          echo "TIMEOUT=${{ vars.TIMEOUT }}" >> .env.test
+          echo "MONGODB_HOST_NAME=${{ vars.MONGODB_HOST_NAME }}" >> .env.test
+          echo "MONGODB_PORT=${{ vars.MONGODB_PORT }}" >> .env.test
+          echo "MONGODB_ROOT_USER_NAME=${{ vars.MONGODB_ROOT_USER_NAME }}" >> .env.test
+          echo "MONGODB_ROOT_USER_PWD=${{ vars.MONGODB_ROOT_USER_PWD }}" >> .env.test
+          echo "MONGODB_DATABASE=${{ vars.MONGODB_DATABASE }}" >> .env.test
+          echo "MONGODB_USER_NAME=${{ vars.MONGODB_USER_NAME }}" >> .env.test
+          echo "MONGODB_USER_PWD=${{ vars.MONGODB_USER_PWD }}" >> .env.test
+          echo "DATADRIVE=${{ vars.DATADRIVE }}" >> .env.test
+          echo "WHISPER_MODEL=${{ vars.WHISPER_MODEL }}" >> .env.test
+          echo "SECRET_PHRASE=${{ vars.SECRET_PHRASE }}" >> .env.test
+          echo "AUTHENTICATION_THRESHOLD=${{ vars.AUTHENTICATION_THRESHOLD }}" >> .env.test
+          cat .env.test
+
+      - name: Build the containers & Start the containers
+        run: |
+          docker-compose -f docker-compose.test.yml --env-file .env.test up --build -d
+
+      - name: Test with pytest
+        run: |
+          docker exec auto-unlock-server_test_1 pytest -v
+
+      - name: Clean up
+        if: always()
+        run: |
+          docker-compose -f docker-compose.test.yml --env-file .env.test down

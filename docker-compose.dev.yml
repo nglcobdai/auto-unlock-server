@@ -1,13 +1,13 @@
 version: "3.3"
 services:
-  prod:
+  dev:
     build:
       context: .
-      dockerfile: ./Dockerfile.prod
+      dockerfile: ./Dockerfile.dev
     env_file:
-      - .env.prod
+      - .env.dev
     environment:
-      - ENV=prod
+      - ENV=dev
       - NVIDIA_VISIBLE_DEVICES=all
     volumes:
       - .:/root/workspace
@@ -16,7 +16,7 @@ services:
     command: /bin/bash
     shm_size: ${DOCKER_SHM_SIZE}
     ports:
-      - "8000:8000"
+      - "8001:8001"
     depends_on:
       - ${MONGODB_HOST_NAME}
     networks:
@@ -30,7 +30,7 @@ services:
   mongodb:
     image: mongo:5.0.4
     env_file:
-      - .env.prod
+      - .env.dev
     container_name: ${MONGODB_HOST_NAME}
     hostname: ${MONGODB_HOST_NAME}
     restart: always
@@ -50,7 +50,7 @@ services:
     image: mongo-express
     restart: always
     env_file:
-      - .env.prod
+      - .env.dev
     ports:
       - "8081:8081"
     environment:
