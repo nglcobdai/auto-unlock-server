@@ -3,13 +3,10 @@ import hashlib
 import hmac
 import json
 import time
-from logging import getLogger
 
 import requests
 
-from server.utils.config import settings
-
-logger = getLogger(__name__)
+from server.utils import logger, settings
 
 
 class SwitchBot:
@@ -54,7 +51,8 @@ class SwitchBot:
         data = res.json()
         message = data.get("message", None)
         if message == "success":
-            logger.info(f"Successfully POST request to {url}, params: {params}")
+            logger.info(f"Successfully POST request to {url}")
+            logger.debug(f"params: {params}, res: {data}")
         else:
             logger.error(
                 f"Failed POST request to {url}, params: {params}, res: {message}"
@@ -79,3 +77,12 @@ class SwitchBot:
             "commandType": "command",
         }
         return self._post_request(url, params, headers)
+
+
+def main():
+    switch_bot = SwitchBot()
+    print(switch_bot.get_device_list())
+
+
+if __name__ == "__main__":
+    main()

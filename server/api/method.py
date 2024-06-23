@@ -1,7 +1,7 @@
 from fastapi import APIRouter, BackgroundTasks, File, UploadFile
 
 from server.src.auto_unlock import AutoUnlock
-from server.utils.config import settings
+from server.utils import settings
 
 ROOT_PATH = f"/{settings.API_VERSION}"
 

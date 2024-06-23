@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile.test
     env_file:
       - .env.test
+    environment:
+      - ENV=test
     volumes:
       - .:/root/workspace
     tty: true
@@ -15,8 +17,6 @@ services:
       - ${MONGODB_HOST_NAME}
     networks:
       - default
-    environment:
-      - ENV=test
 
   mongodb:
     image: mongo:5.0.4
@@ -30,7 +30,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: ${MONGODB_ROOT_USER_PWD}
       TZ: Asia/Tokyo
     ports:
-      - "${MONGODB_PORT}:${MONGODB_PORT}"
+      - ${MONGODB_PORT}:${MONGODB_PORT}
     volumes:
       - ${DATADRIVE}/db:/data/db
     networks:
