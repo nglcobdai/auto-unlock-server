@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from server.api import router as api_router
-from server.utils.config import settings
+from server.utils import settings
 
 server = FastAPI(
     title=settings.APP_NAME,

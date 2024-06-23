@@ -1,5 +1,4 @@
 import base64
-from logging import getLogger
 from time import time
 
 from fastapi import BackgroundTasks
@@ -7,9 +6,7 @@ from fastapi import BackgroundTasks
 from server.src.authenticator import SecretPhraseAuthenticator
 from server.src.mongodb import MongoDB
 from server.src.switch_bot import SwitchBot
-from server.utils.config import settings
-
-logger = getLogger(__name__)
+from server.utils import logger, settings
 
 
 class AutoUnlock:
@@ -33,7 +30,7 @@ class AutoUnlock:
     ):
         self.check_timeout()
         if (file) and (self.is_phase_unlock):
-            logger.info("Unlocking the bot")
+            logger.info("Unlocking the bot process is called")
             return await self.control_unlock_bot(file, background_tasks)
         elif (file is None) and (self.is_phase_unlock):
             return {
@@ -46,7 +43,7 @@ class AutoUnlock:
                 "phrase_authorized": self.is_phase_unlock,
             }
 
-        logger.info("Calling the bot")
+        logger.info("Calling the bot process is called")
         return self.control_call_bot()
 
     def check_timeout(self):
@@ -80,9 +77,7 @@ class AutoUnlock:
 
         if is_auth:
             logger.info(
-                f"Authentication succeeded,\
-                result: {self.authenticator.context},\
-                score: {self.authenticator.score}"
+                f"Authentication succeeded, result: {self.authenticator.context}, score: {self.authenticator.score}"
             )
             response = self.switch_bot.control_device(settings.UNLOCK_BOT_ID, "turnOn")
             response["phrase_authorized"] = True
@@ -107,5 +102,4 @@ class AutoUnlock:
                 },
             )
         except Exception as e:
-            # ロギングや他のエラーハンドリングが必要であればここに追加
             logger.error(f"Failed to save data to MongoDB: {e}")

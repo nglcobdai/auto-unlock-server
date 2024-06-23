@@ -1,6 +1,6 @@
 from whisper import load_model
 
-from server.utils.config import settings
+from server.utils import settings
 
 
 class Transcription:

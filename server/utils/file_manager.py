@@ -1,11 +1,10 @@
 from pathlib import Path
 
-from server.utils.config import settings
-
 
 class FileManager:
-    def __init__(self):
-        temporary_file_dir = Path(settings.DATADRIVE) / "temp"
+
+    def __init__(self, datadrive):
+        temporary_file_dir = Path(datadrive) / "temp"
         temporary_file_dir.mkdir(parents=True, exist_ok=True)
         self.temp_file_path = temporary_file_dir / "temp.wav"
 
