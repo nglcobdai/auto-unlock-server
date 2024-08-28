@@ -43,6 +43,11 @@ jobs:
           echo "AUTHENTICATION_THRESHOLD=${{ vars.AUTHENTICATION_THRESHOLD }}" >> .env.test
           cat .env.test
 
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
       - name: Build the containers & Start the containers
         run: |
           docker-compose -f docker-compose.test.yml --env-file .env.test up --build -d
