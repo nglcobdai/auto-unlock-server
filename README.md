@@ -27,7 +27,7 @@ It is intended to be used in combination with [Auto Unlock App](https://github.c
 ### 1. Clone & Prepare .env
 
 ```sh
-$ git clone -b v1.1.0 https://github.com/nglcobdai/auto-unlock-server.git
+$ git clone -b v1.1.1 https://github.com/nglcobdai/auto-unlock-server.git
 $ cd auto-unlock-server
 ```
 
