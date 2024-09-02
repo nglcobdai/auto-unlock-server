@@ -25,7 +25,9 @@ services:
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
   mongodb:
     image: mongo:5.0.4
