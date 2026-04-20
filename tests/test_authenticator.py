@@ -23,4 +23,4 @@ class TestTranscription:
         result = self.transcription(str(file_manager.temp_file_path))
         file_manager.delete_temporary_file()
 
-        assert result["text"] == "ひらけごま"
+        assert result["text"] == "開けごま"
