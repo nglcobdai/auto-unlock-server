@@ -18,7 +18,7 @@ levenshtein = "^0.25.1"
 pytz = "^2024.1"
 llvmlite = "0.44.0" # 暫定的にversion指定
 numba = "0.61.0"    # 暫定的にversion指定
-torch = ">=2.8.0"   # CVE-2025-3730 対策
+torch = ">=2.8.0,<3.0.0"   # CVE-2025-3730 対策
 
 [tool.poetry.group.dev.dependencies]
 pep8 = "^1.7.1"
