@@ -6,27 +6,28 @@ authors = ["Kodai YAMASHITA <nglcobdai@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-fastapi = "^0.115.11"
+python = ">=3.10,<3.14"
+fastapi = "^0.120.3"
 uvicorn = "^0.29.0"
 pydantic = "<2.0"
 python-dotenv = "^1.0.1"
 pymongo = "^4.7.2"
-python-multipart = "^0.0.18"
-openai-whisper = { git = "https://github.com/openai/whisper.git", rev = "v20231117" }
+python-multipart = "^0.0.26"
+openai-whisper = "^20250625"
 levenshtein = "^0.25.1"
 pytz = "^2024.1"
 llvmlite = "0.44.0" # 暫定的にversion指定
 numba = "0.61.0"    # 暫定的にversion指定
+torch = ">=2.8.0,<3.0.0"   # CVE-2025-3730 対策
 
 [tool.poetry.group.dev.dependencies]
 pep8 = "^1.7.1"
-black = "^24.3.0"
+black = "^26.3.1"
 flake8 = "^6.1.0"
 isort = "^5.12.0"
 ipython = "^8.15.0"
 ipykernel = "^6.25.2"
-pytest = "^8.2.0"
+pytest = "^9.0.3"
 httpx = "^0.27.0"
 
 [build-system]
