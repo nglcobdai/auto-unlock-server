@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 from server.api import router as api_router
 from server.utils import settings
+from server.utils.host_validation import HostValidationMiddleware
 
 server = FastAPI(
     title=settings.APP_NAME,
@@ -10,6 +11,7 @@ server = FastAPI(
     openapi_url=settings.OPENAPI_URL,
 )
 
+server.add_middleware(HostValidationMiddleware)
 server.include_router(api_router)
 
 if __name__ == "__main__":

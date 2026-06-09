@@ -18,6 +18,16 @@ class TestAutoUnlockAPI:
 
         assert response.status_code == 200
 
+    def test_post_without_host_header(self):
+        response = self.client.post(self.endpoint_url, headers={"host": ""})
+
+        assert response.status_code == 400
+
+    def test_post_with_malformed_host_header(self):
+        response = self.client.post(self.endpoint_url, headers={"host": "example.com/admin"})
+
+        assert response.status_code == 400
+
     def test_post_with_file(self):
         _ = self.client.post(self.endpoint_url)
         files = {"file": ("test.wav", open("sample/test.wav", "rb"), "audio/wav")}
