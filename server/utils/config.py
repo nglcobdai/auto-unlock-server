@@ -1,12 +1,12 @@
 import os
 
-from pydantic import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     APP_NAME: str
     API_VERSION: str
-    OPENAPI_URL: str = None
+    OPENAPI_URL: str | None = None
 
     SWITCH_BOT_TOKEN: str
     SWITCH_BOT_SECRET: str
@@ -27,10 +27,10 @@ class Settings(BaseSettings):
     SECRET_PHRASE: str
     AUTHENTICATION_THRESHOLD: float
 
-    class Config:
-        env = os.getenv("ENV", "dev")
-        env_file = f".env.{env}"
-        env_file_encoding = "utf-8"
+    model_config = SettingsConfigDict(
+        env_file=f".env.{os.getenv('ENV', 'dev')}",
+        env_file_encoding="utf-8",
+    )
 
     def __init__(self, **data):
         super().__init__(**data)
