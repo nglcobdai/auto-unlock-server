@@ -3,6 +3,8 @@ FROM ubuntu:22.04
 ENV LANG=C.UTF-8 \
     LANGUAGE=en_US \
     PYTHONPATH="/root/workspace/app:$PYTHONPATH" \
+    POETRY_HOME="/opt/poetry" \
+    PATH="/opt/poetry/bin:$PATH" \
     DEBIAN_FRONTEND=noninteractive
 
 # 基本ツールのインストール
@@ -10,7 +12,7 @@ RUN apt-get update && apt-get install -y wget gnupg software-properties-common \
     && rm -rf /var/lib/apt/lists/*
 
 # Pythonのインストール
-RUN apt-get update && apt-get install -y python3.10 python3-pip \
+RUN apt-get update && apt-get install -y python3.10 python3-pip python3.10-venv \
     && ln -s /usr/bin/python3.10 /usr/bin/python \
     && rm -rf /var/lib/apt/lists/*
 
@@ -35,8 +37,9 @@ WORKDIR /root/workspace
 COPY pyproject.toml poetry.lock poetry.toml $WORKDIR/
 
 # Poetryのインストールと依存関係のインストール
-RUN pip install --no-cache-dir --upgrade pip \
-    && pip install --upgrade poetry
+RUN python3.10 -m venv $POETRY_HOME \
+    && $POETRY_HOME/bin/pip install --upgrade pip \
+    && $POETRY_HOME/bin/pip install poetry
 
 # Temporary directory for Poetry and torch installation
 ENV TMPDIR=/root/workspace/tmp
