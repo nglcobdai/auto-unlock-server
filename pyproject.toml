@@ -24,7 +24,7 @@ torch = ">=2.13.0,<3.0.0"  # CVE-2025-3730 / GHSA-rrmf-rvhw-rf47 対策
 
 [tool.poetry.group.dev.dependencies]
 pep8 = "^1.7.1"
-black = "^26.3.1"
+black = "^26.10.1" # GHSA-cg8m-r9f2-5wm2 対策
 flake8 = "^6.1.0"
 isort = "^5.12.0"
 ipython = "^8.15.0"
