@@ -13,7 +13,7 @@ uvicorn = "^0.29.0"
 pydantic = "^2.9.0"
 pydantic-settings = "^2.14.2"
 python-dotenv = "^1.0.1"
-pymongo = ">=4.18.2,<5.0.0"
+pymongo = ">=4.18.3,<5.0.0" # GHSA-98qm-wvgf-w4cf 対策
 python-multipart = "^0.0.31" # CVE-2026-42561 / -53537 / -53538 / -53539 / -53540 対策
 openai-whisper = "^20250625"
 levenshtein = "^0.25.1"
